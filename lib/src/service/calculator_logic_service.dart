@@ -4,18 +4,36 @@ class CalculatorService {
   List<String> get getList => _buttonText;
 
   bool switchButtonColor(String x) {
-    if (x == "÷" || x == "x" || x == "+" || x == "-" || x == "=") {
+    if (x == "÷" ||
+        x == "x" ||
+        x == "+" ||
+        x == "-" ||
+        x == "=" ||
+        x == "/" ||
+        x == "%") {
       return true;
     } else {
       return false;
     }
   }
 
-
+  void equalToFunction(String countNumber, String answerNumber) {
+    try {
+      var question = countNumber;
+      question = question.replaceAll("x", "*");
+      Parser prs = Parser();
+      Expression expression = prs.parse(question);
+      ContextModel contextModel = ContextModel();
+      double numbers = expression.evaluate(EvaluationType.REAL, contextModel);
+      answerNumber = numbers.toInt().toString();
+    } catch (e) {
+      answerNumber = "Notogri son kiritildi";
+    }
+  }
 
   final List<String> _buttonText = [
+    'ANS',
     'C',
-    'DEl',
     '%',
     '/',
     '9',
@@ -32,7 +50,7 @@ class CalculatorService {
     '+',
     '0',
     '.',
-    'ANS',
+    'DEL',
     '='
   ];
 }
